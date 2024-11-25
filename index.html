@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://cdn.jsdelivr.net/npm/@emailjs/; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-src https://www.google.com/recaptcha/; connect-src https://api.emailjs.com/">
+    <meta name="cookie-policy" content="Ce site utilise des cookies pour améliorer votre expérience utilisateur.">
+    <title>Selim Jabnoun - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.google.com/recaptcha/api.js?hl=en" async defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function() {
+          emailjs.init("FGxzx0vKomIo0Pl8S");
+       })();
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">Selim Jabnoun</h1>
+            <ul class="nav-links">
+                <li><a href="#about" data-fr="À propos" data-en="About">À propos</a></li>
+                <li><a href="#projects" data-fr="Projets" data-en="Projects">Projets</a></li>
+                <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+                <li class="language-switch">
+                    <button class="lang-btn active" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </li>
+                <li class="theme-switch">
+                    <label class="theme-slider">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="slider">
+                            <i class="fas fa-sun sun-icon"></i>
+                            <i class="fas fa-moon moon-icon"></i>
+                        </span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h2 data-fr="Bonjour, je suis Selim" data-en="Hi, I'm Selim">Bonjour, je suis Selim</h2>
+                <p data-fr="Un étudiant en Informatique spécialisé en IA et Science des Données." 
+                   data-en="A Computer Engineering Student specializing in AI and Data Science.">
+                    Un étudiant Informatique spécialisé en IA et Science des Données.
+                </p>
+                <div class="soft-skills">
+                    <h3 data-fr="Compétences Personnelles" data-en="Soft Skills">Compétences Personnelles</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <i class="fas fa-users"></i>
+                            <span data-fr="Travail en équipe" data-en="Teamwork">Travail en équipe</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-comments"></i>
+                            <span data-fr="Communication" data-en="Communication">Communication</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span data-fr="Résolution de problèmes" data-en="Problem Solving">Résolution de problèmes</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-sync-alt"></i>
+                            <span data-fr="Adaptabilité" data-en="Adaptability">Adaptabilité</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-search"></i>
+                            <span data-fr="Observation" data-en="Observation">Observation</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-brain"></i>
+                            <span data-fr="Apprentissage rapide" data-en="Quick Learning">Apprentissage rapide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-card">
+                <div class="profile-image">
+                    <!-- Remplacez le chemin par le chemin de votre image -->
+                    <img src="\SiteWeb_portfolio\Pro.JPG" alt="Selim Jabnoun">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 data-fr="Mes Projets" data-en="My Projects">Mes Projets</h2>
+            <div class="project-list">
+                <!-- Système de Reconnaissance Faciale -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="👤 Système de Reconnaissance Faciale" data-en="👤 Facial Recognition System">
+                            👤 Système de Reconnaissance Faciale
+                        </h3>
+                        <p data-fr="Un système de reconnaissance faciale en temps réel construit avec TensorFlow et Kivy, capable d'identifier les visages avec une haute précision."
+                           data-en="A real-time facial recognition system built using TensorFlow and Kivy, capable of identifying faces with high accuracy.">
+                            Un système de reconnaissance faciale en temps réel construit avec TensorFlow et Kivy, capable d'identifier les visages avec une haute précision.
+                        </p>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Ce projet utilise un réseau neuronal siamois pour comparer les caractéristiques faciales et effectuer une reconnaissance en temps réel. TensorFlow a été utilisé pour l'entraînement du modèle, tandis que Kivy a fourni une interface graphique intuitive pour l'interaction en temps réel. Le système a été conçu pour être évolutif et testé avec divers jeux de données pour assurer sa robustesse dans différents environnements."
+                               data-en="This project leverages a Siamese neural network to compare facial features and perform real-time recognition. TensorFlow was used for model training, while Kivy provided an intuitive graphical user interface for real-time interaction. The system was designed for scalability and tested with a variety of datasets to ensure robustness in different environments.">
+                                Ce projet utilise un réseau neuronal siamois pour comparer les caractéristiques faciales et effectuer une reconnaissance en temps réel. TensorFlow a été utilisé pour l'entraînement du modèle, tandis que Kivy a fourni une interface graphique intuitive pour l'interaction en temps réel. Le système a été conçu pour être évolutif et testé avec divers jeux de données pour assurer sa robustesse dans différents environnements.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">TensorFlow</span>
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Kivy</span>
+                                <span class="tech-tag">Neural Networks</span>
+                                <span class="tech-tag">Siamese Model</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optimisation de Routes avec IA Hybride -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="🗺️ Optimisation de Routes avec IA Hybride" data-en="🗺️ Hybrid AI Route Optimization">
+                            🗺️ Optimisation de Routes avec IA Hybride
+                        </h3>
+                        <p data-fr="Solution avancée d'optimisation d'itinéraires combinant algorithmes génétiques et recherche tabou pour résoudre le problème du voyageur de commerce avec contraintes réelles."
+                           data-en="Advanced route optimization solution combining genetic algorithms and tabu search to solve the traveling salesman problem with real-world constraints.">
+                            Solution avancée d'optimisation d'itinéraires combinant algorithmes génétiques et recherche tabou pour résoudre le problème du voyageur de commerce avec contraintes réelles.
+                        </p>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Ce projet combine des approches classiques et modernes pour résoudre le problème du voyageur de commerce (TSP). En utilisant une approche hybride avec des algorithmes génétiques et la recherche tabou, nous avons développé une solution capable de gérer des contraintes réelles comme les fenêtres temporelles et les données incomplètes. La visualisation des itinéraires est assurée par NetworkX et Matplotlib/Plotly, permettant une analyse claire des résultats. Le système a démontré une réduction significative des coûts et temps de trajet tout en s'adaptant aux contraintes du monde réel."
+                               data-en="This project combines classical and modern approaches to solve the Traveling Salesman Problem (TSP). Using a hybrid approach with genetic algorithms and tabu search, we developed a solution capable of handling real-world constraints such as time windows and incomplete data. Route visualization is handled by NetworkX and Matplotlib/Plotly, enabling clear analysis of results. The system demonstrated significant reduction in travel costs and times while adapting to real-world constraints.">
+                                Ce projet combine des approches classiques et modernes pour résoudre le problème du voyageur de commerce (TSP). En utilisant une approche hybride avec des algorithmes génétiques et la recherche tabou, nous avons développé une solution capable de gérer des contraintes réelles comme les fenêtres temporelles et les données incomplètes. La visualisation des itinéraires est assurée par NetworkX et Matplotlib/Plotly, permettant une analyse claire des résultats. Le système a démontré une réduction significative des coûts et temps de trajet tout en s'adaptant aux contraintes du monde réel.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Algorithmes Génétiques</span>
+                                <span class="tech-tag">Recherche Tabou</span>
+                                <span class="tech-tag">NetworkX</span>
+                                <span class="tech-tag">Matplotlib</span>
+                                <span class="tech-tag">Plotly</span>
+                                <span class="tech-tag">Optimisation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Système de Gestion Client Web -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="👥 Système de Gestion Client Web" data-en="👥 Web Client Management System">
+                            👥 Système de Gestion Client Web
+                        </h3>
+                        <p data-fr="Développement d'une application web pour la gestion des clients et des licences pour 6WIND, améliorant l'efficacité opérationnelle."
+                           data-en="Developed a web application to manage clients and licenses for 6WIND, improving operational efficiency.">
+                            Développement d'une application web pour la gestion des clients et des licences pour 6WIND, améliorant l'efficacité opérationnelle.
+                        </p>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Cette MVP a permis aux utilisateurs de gérer les données clients et les licences logicielles via un portail web intuitif. Les fonctionnalités principales incluaient l'ajout, la modification et la suppression de licences, ainsi que l'automatisation de la gestion des rôles utilisateurs. L'application a été construite en utilisant PHP pour la logique backend, MySQL pour la base de données, et HTML/CSS/JavaScript pour le frontend, assurant une expérience utilisateur fluide et sécurisée."
+                               data-en="This MVP allowed users to manage client data and software licenses via an intuitive web portal. Core features included adding, modifying, and deleting licenses, as well as automating user role management. The application was built using PHP for backend logic, MySQL for the database, and HTML/CSS/JavaScript for the frontend, ensuring a seamless and secure user experience.">
+                                Cette MVP a permis aux utilisateurs de gérer les données clients et les licences logicielles via un portail web intuitif. Les fonctionnalités principales incluaient l'ajout, la modification et la suppression de licences, ainsi que l'automatisation de la gestion des rôles utilisateurs. L'application a été construite en utilisant PHP pour la logique backend, MySQL pour la base de données, et HTML/CSS/JavaScript pour le frontend, assurant une expérience utilisateur fluide et sécurisée.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">PHP</span>
+                                <span class="tech-tag">MySQL</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">Apache Server</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bot de Trading IA -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="🤖 Bot de Trading IA" data-en="🤖 AI Trading Bot Exploration">
+                            🤖 Bot de Trading IA
+                        </h3>
+                        <p data-fr="Exploration de solutions basées sur l'IA pour le trading de cryptomonnaies et l'analyse de marché."
+                           data-en="Explored AI-based solutions for cryptocurrency trading and market analysis.">
+                            Exploration de solutions basées sur l'IA pour le trading de cryptomonnaies et l'analyse de marché.
+                        </p>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Ce projet en cours explore l'utilisation de modèles d'apprentissage automatique pour prédire les tendances des prix des cryptomonnaies. Les efforts initiaux se concentrent sur la collecte de données historiques de marché et l'application d'algorithmes comme les réseaux LSTM (Long Short-Term Memory) pour prévoir les mouvements de prix. Les objectifs futurs incluent l'automatisation des transactions et l'optimisation de la gestion de portefeuille."
+                               data-en="This ongoing project investigates using machine learning models for predicting cryptocurrency price trends. Initial efforts focus on gathering historical market data and applying algorithms like LSTM (Long Short-Term Memory) networks to forecast price movements. Future goals include automating trades and optimizing portfolio management.">
+                                Ce projet en cours explore l'utilisation de modèles d'apprentissage automatique pour prédire les tendances des prix des cryptomonnaies. Les efforts initiaux se concentrent sur la collecte de données historiques de marché et l'application d'algorithmes comme les réseaux LSTM (Long Short-Term Memory) pour prévoir les mouvements de prix. Les objectifs futurs incluent l'automatisation des transactions et l'optimisation de la gestion de portefeuille.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Machine Learning</span>
+                                <span class="tech-tag">Cryptocurrency APIs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualisation des Données de Vente avec Power BI -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="📊 Visualisation des Données de Vente" data-en="📊 Sales Data Visualization">
+                            📊 Visualisation des Données de Vente
+                        </h3>
+                        <p data-fr="Création d'un tableau de bord Power BI interactif pour visualiser et analyser les données de vente d'une entreprise de commerce de détail."
+                           data-en="Created an interactive Power BI dashboard to visualize and analyze sales data for a retail business.">
+                            Création d'un tableau de bord Power BI interactif pour visualiser et analyser les données de vente d'une entreprise de commerce de détail.
+                        </p>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Ce projet a impliqué le développement d'un tableau de bord de ventes avancé pour aider une entreprise de commerce de détail à identifier les tendances, surveiller les performances et prendre des décisions basées sur les données. En utilisant Power BI, j'ai nettoyé et transformé des données de vente brutes provenant de diverses sources, y compris des fichiers Excel et des bases de données SQL. Le tableau de bord présentait des indicateurs clés de performance (KPI), tels que les revenus mensuels, la segmentation des clients et la performance des catégories de produits. Des visualisations avancées, comme des cartes thermiques et des graphiques linéaires, ont mis en évidence les tendances des ventes et aidé à identifier les zones sous-performantes."
+                               data-en="This project involved the development of an advanced sales dashboard to help a retail business identify trends, monitor performance, and make data-driven decisions. Using Power BI, I cleaned and transformed raw sales data from various sources, including Excel files and SQL databases. The dashboard featured key performance indicators (KPIs), such as monthly revenue, customer segmentation, and product category performance. Advanced visualizations, like heat maps and line graphs, highlighted sales trends and helped identify underperforming areas.">
+                                Ce projet a impliqué le développement d'un tableau de bord de ventes avancé pour aider une entreprise de commerce de détail à identifier les tendances, surveiller les performances et prendre des décisions basées sur les données. En utilisant Power BI, j'ai nettoyé et transformé des données de vente brutes provenant de diverses sources, y compris des fichiers Excel et des bases de données SQL. Le tableau de bord présentait des indicateurs clés de performance (KPI), tels que les revenus mensuels, la segmentation des clients et la performance des catégories de produits. Des visualisations avancées, comme des cartes thermiques et des graphiques linéaires, ont mis en évidence les tendances des ventes et aidé à identifier les zones sous-performantes.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">Power BI</span>
+                                <span class="tech-tag">SQL</span>
+                                <span class="tech-tag">Data Cleaning</span>
+                                <span class="tech-tag">Data Visualization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mini Application de Gestion -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="💼 Mini Application de Gestion" data-en="💼 Management Mini Application">
+                            💼 Mini Application de Gestion
+                        </h3>
+                        <p data-fr="Application desktop pour la gestion digitalisée du personnel et des stocks d'entreprise."
+                           data-en="Desktop application for digitalized management of company personnel and inventory.">
+                            Application desktop pour la gestion digitalisée du personnel et des stocks d'entreprise.
+                        </p>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Cette application Windows Forms a été développée pour simplifier la gestion administrative des entreprises. Elle offre une interface intuitive permettant aux utilisateurs de gérer efficacement les données du personnel (ajout, modification, suppression, consultation) ainsi que le suivi des stocks. L'application utilise une architecture moderne avec le Framework .NET et une base de données MySQL pour assurer la persistance des données. La gestion des versions et la collaboration ont été facilitées par l'utilisation de GitHub pour le contrôle de version."
+                               data-en="This Windows Forms application was developed to streamline business administrative management. It provides an intuitive interface allowing users to efficiently manage personnel data (addition, modification, deletion, consultation) as well as inventory tracking. The application uses a modern architecture with the .NET Framework and a MySQL database to ensure data persistence. Version management and collaboration were facilitated by using GitHub for version control.">
+                                Cette application Windows Forms a été développée pour simplifier la gestion administrative des entreprises. Elle offre une interface intuitive permettant aux utilisateurs de gérer efficacement les données du personnel (ajout, modification, suppression, consultation) ainsi que le suivi des stocks. L'application utilise une architecture moderne avec le Framework .NET et une base de données MySQL pour assurer la persistance des données. La gestion des versions et la collaboration ont été facilitées par l'utilisation de GitHub pour le contrôle de version.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">Visual Studio</span>
+                                <span class="tech-tag">.NET Framework</span>
+                                <span class="tech-tag">MySQL</span>
+                                <span class="tech-tag">GitHub</span>
+                                <span class="tech-tag">Windows Forms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add more projects here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 data-fr="Me Contacter" data-en="Contact Me">Me Contacter</h2>
+            
+            <!-- Formulaire -->
+            <form id="contactForm">
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    data-fr-placeholder="Votre Nom" 
+                    data-en-placeholder="Your Name" 
+                    placeholder="Votre Nom" 
+                    required
+                >
+                
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    data-fr-placeholder="Votre Email" 
+                    data-en-placeholder="Your Email" 
+                    placeholder="Votre Email" 
+                    required
+                >
+                
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    data-fr-placeholder="Votre Message" 
+                    data-en-placeholder="Your Message" 
+                    placeholder="Votre Message" 
+                    required
+                ></textarea>
+                
+                <div class="g-recaptcha" data-sitekey="6LcfgIkqAAAAAPJ_pX8JnMrkA9c3EhiY9cZN5INY"></div>
+                
+                <button 
+                    type="submit" 
+                    class="btn" 
+                    data-fr="Envoyer le Message" 
+                    data-en="Send Message"
+                >Envoyer le Message</button>
+            </form>
+
+            <!-- Séparateur -->
+            <div class="contact-options">
+                <p class="contact-divider" data-fr="ou" data-en="or">ou</p>
+                <!-- Option Email direct -->
+                <a href="mailto:selimjabnoun039@gmail.com" class="email-link">
+                    <button class="btn email-btn" data-fr="M'envoyer un Email" data-en="Send me an Email">
+                        <i class="far fa-envelope"></i> M'envoyer un Email
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="project-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Facial Recognition System</h2>
+            <div class="modal-body">
+                <p class="short-description">Created an interactive Power BI dashboard to visualize and analyze sales data for a retail business.</p>
+                
+                <h3>Detailed Description</h3>
+                <p class="detailed-description">
+                    This project involved the development of an advanced sales dashboard to help a retail business identify trends, monitor performance, and make data-driven decisions. Using Power BI, I cleaned and transformed raw sales data from various sources, including Excel files and SQL databases. The dashboard featured key performance indicators (KPIs), such as monthly revenue, customer segmentation, and product category performance. Advanced visualizations, like heat maps and line graphs, highlighted sales trends and helped identify underperforming areas.
+                </p>
+                
+                <div class="technologies">
+                    <h3>Key Technologies:</h3>
+                    <p>Power BI, SQL, Data Cleaning, Data Visualization</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <p data-fr="Ce site utilise des cookies pour améliorer votre expérience." 
+                   data-en="This site uses cookies to enhance your experience.">
+                    Ce site utilise des cookies pour améliorer votre expérience.
+                </p>
+                <button class="cookie-policy-btn" id="viewPolicy" 
+                        data-fr="Voir la politique des cookies" 
+                        data-en="View cookie policy">
+                    Voir la politique des cookies
+                </button>
+            </div>
+            <div class="cookie-buttons">
+                <button class="btn cookie-btn accept" data-fr="Accepter" data-en="Accept">Accepter</button>
+                <button class="btn cookie-btn decline" data-fr="Refuser" data-en="Decline">Refuser</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal cookie-policy-modal" id="cookiePolicyModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeCookiePolicy">&times;</span>
+            <h2 data-fr="Politique des Cookies" data-en="Cookie Policy">Politique des Cookies</h2>
+            <div class="modal-body">
+                <div class="cookie-policy-content">
+                    <div class="cookie-section">
+                        <h4 data-fr="Cookies Fonctionnels" data-en="Functional Cookies">Cookies Fonctionnels</h4>
+                        <p data-fr="Nous utilisons ces cookies pour :" data-en="We use these cookies to:">
+                            Nous utilisons ces cookies pour :
+                        </p>
+                        <ul>
+                            <li>Mémoriser votre email dans le formulaire de contact</li>
+                            <li>Sauvegarder vos préférences de consentement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
