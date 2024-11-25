@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-monitoring",
+  "version": "1.0.0",
+  "description": "Monitoring pour portfolio",
+  "main": "monitoring/server.js",
+  "scripts": {
+    "start": "node monitoring/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "prom-client": "^14.0.1"
+  }
+} 
