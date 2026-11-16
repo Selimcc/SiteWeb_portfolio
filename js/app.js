@@ -21,15 +21,15 @@
     { id: "contact", label: "Contact" },
   ];
   const ALIASES = { "": "presentation", accueil: "presentation", moi: "presentation" };
-  const PROJECTS = S.projects.filter((p) => !p.hidden);
+  const catOrder = Object.fromEntries(S.categories.map((c, i) => [c.id, i]));
+  const PROJECTS = S.projects.filter((p) => !p.hidden).sort((a, b) => catOrder[a.cat] - catOrder[b.cat]);
   const projectsById = Object.fromEntries(PROJECTS.map((p) => [p.id, p]));
   const catById = Object.fromEntries(S.categories.map((c) => [c.id, c]));
   const inCat = (id) => PROJECTS.filter((p) => p.cat === id);
   const isDone = (status) => /termin|publi|jouable|livr|en ligne/i.test(status);
   const initials = P.name.split(" ").map((w) => w[0]).join("");
 
-  const PAGE_SIZE = 6;
-  const state = { view: null, cat: S.categories[0].id, page: {}, open: null, navToken: 0, lastFocus: null };
+  const state = { view: null, filter: "all", open: null, navToken: 0, lastFocus: null };
 
   /* ---------------- Icônes (traits simples) ---------------- */
   const PATHS = {
@@ -102,15 +102,18 @@
     const punct = m ? m[1] : "";
     const rotP = punct ? rot.replace(/<\/span>(?=<span|<\/span>$)/g, `${esc(punct)}</span>`) : rot;
     const headline = rich(P.headline.replace(`{rotate}${punct}`, "{rotate}")).replace("{rotate}", rotP);
+    const featured = (P.featured || []).map((id) => projectsById[id]).filter(Boolean);
     return `
     <section class="view" data-view="presentation" aria-labelledby="t-presentation">
       <p class="kicker st" style="--i:0">Présentation</p>
       <h1 class="title st" style="--i:0" id="t-presentation">${headline}</h1>
-      <div class="summary st" style="--i:1">${A.summary.map((t) => `<p>${rich(t)}</p>`).join("")}</div>
-      <div class="stats st" style="--i:2">${stats}</div>
+      <div class="hero">
+        <div class="summary st" style="--i:1">${A.summary.map((t) => `<p>${rich(t)}</p>`).join("")}</div>
+        <div class="stats st" style="--i:2">${stats}</div>
+      </div>
       <div class="two">
         ${now ? `
-        <a class="card feature st" style="--i:3" href="#projets/${esc(now.id)}">
+        <a class="card feature st" style="--i:3" href="#presentation/${esc(now.id)}">
           <p class="label"><span class="dot" aria-hidden="true"></span>En ce moment</p>
           <h3>${esc(now.title)}</h3>
           <p class="txt">${rich(now.tagline)}</p>
@@ -121,30 +124,35 @@
           <ul>${A.approach.map((x) => `<li><strong>${esc(x.title)}</strong><span>${esc(x.text)}</span></li>`).join("")}</ul>
         </div>
       </div>
-      <p class="interests st" style="--i:5"><strong>En dehors du travail</strong>${A.interests.map((x) => `<span class="chip">${esc(x)}</span>`).join("")}</p>
+      ${featured.length ? `
+      <div class="highlights st" style="--i:5">
+        <div class="hl-head"><p class="label">Projets phares</p><a class="link" href="#projets">Voir les ${PROJECTS.length} projets ${icon("arrow", 15)}</a></div>
+        <div class="hl-grid">${featured.map((p) => `
+          <button class="mini" data-project="${esc(p.id)}" style="--c:var(--c-${p.cat})">
+            <span class="mini-top"><span class="cat"><span class="cdot"></span>${esc(catById[p.cat].label)}</span>${icon("arrow", 15)}</span>
+            <strong>${esc(p.title)}</strong>
+            <span class="mini-txt">${rich(p.tagline)}</span>
+          </button>`).join("")}
+        </div>
+      </div>` : ""}
+      <p class="interests st" style="--i:6"><strong>En dehors du travail</strong>${A.interests.map((x) => `<span class="chip">${esc(x)}</span>`).join("")}</p>
     </section>`;
   }
 
   function viewProjects() {
-    const tabs = S.categories.map((c) => `
-      <button role="tab" id="tab-${c.id}" aria-controls="pgrid" data-tab="${c.id}" aria-selected="${c.id === state.cat}">
-        ${esc(c.label)} <span class="count">${inCat(c.id).length}</span>
+    const filters = [{ id: "all", label: "Tous", n: PROJECTS.length }, ...S.categories.map((c) => ({ id: c.id, label: c.label, n: inCat(c.id).length }))];
+    const tabs = filters.map((f) => `
+      <button role="tab" id="tab-${f.id}" aria-controls="pgroups" data-tab="${f.id}" aria-selected="${f.id === state.filter}">
+        ${esc(f.label)} <span class="count">${f.n}</span>
       </button>`).join("");
     return `
     <section class="view" data-view="projets" aria-labelledby="t-projets">
-      <div class="vh-row st" style="--i:0">
-        <div><p class="kicker">Projets</p><h2 class="title" id="t-projets">Ce que j'ai réalisé</h2></div>
-        <div class="seg tabs" role="tablist" aria-label="Catégories de projets"><span class="seg-pill" aria-hidden="true"></span>${tabs}</div>
+      <div class="st" style="--i:0"><p class="kicker">Projets</p><h2 class="title" id="t-projets">Ce que j'ai réalisé</h2></div>
+      <div class="filterbar st" style="--i:1">
+        <div class="seg tabs" role="tablist" aria-label="Filtrer les projets"><span class="seg-pill" aria-hidden="true"></span>${tabs}</div>
+        <p class="fb-hint" id="fb-hint"></p>
       </div>
-      <div class="proj-bar st" style="--i:1">
-        <p class="desc" id="tab-desc"></p>
-        <div class="pager" id="pager" hidden>
-          <button class="icon-btn" data-page="-1" aria-label="Page précédente">${icon("arrow", 16)}</button>
-          <span id="pager-txt" aria-live="polite"></span>
-          <button class="icon-btn" data-page="1" aria-label="Page suivante">${icon("arrow", 16)}</button>
-        </div>
-      </div>
-      <div class="pgrid" id="pgrid" role="tabpanel"></div>
+      <div id="pgroups" role="tabpanel"></div>
     </section>`;
   }
 
@@ -160,7 +168,10 @@
       </div>
       <div class="path">
         <div class="card st" style="--i:1"><p class="label">Expérience</p>${tl(J.experience)}</div>
-        <div class="card st" style="--i:2"><p class="label">Formation</p>${tl(J.education)}</div>
+        <div class="path-side">
+          <div class="card st" style="--i:2"><p class="label">Formation</p>${tl(J.education)}</div>
+          ${(J.engagements || []).length ? `<div class="card st" style="--i:3"><p class="label">Engagements</p>${tl(J.engagements)}</div>` : ""}
+        </div>
       </div>
     </section>`;
   }
@@ -187,18 +198,31 @@
         <span><span class="lbl">${lbl}</span><br><span class="val">${esc(val)}</span></span>
         <span class="act">${act}</span>
       </${href ? "a" : "div"}>`;
+    const av = P.availability || [];
     return `
     <section class="view" data-view="contact" aria-labelledby="t-contact">
       <p class="kicker st" style="--i:0">Contact</p>
       <h2 class="title st" style="--i:0" id="t-contact">Échangeons</h2>
-      <p class="desc st" style="--i:1">Une opportunité en data ou en IA, une mission freelance ou simplement une question : je réponds volontiers.</p>
-      <div class="contact-list st" style="--i:2">
-        ${row("mail", "E-mail", P.email, null, `<button class="btn btn-sec btn-sm" id="copy-mail">${icon("copy", 15)} Copier</button><a class="btn btn-sm" href="mailto:${esc(P.email)}">Écrire</a>`)}
-        ${row("user", "LinkedIn", P.linkedin.replace(/^https?:\/\/(www\.)?/, ""), P.linkedin, icon("ext", 17))}
-        ${row("code", "GitHub", P.github.replace(/^https?:\/\/(www\.)?/, ""), P.github, icon("ext", 17))}
-        ${row("file", "CV", "Télécharger en PDF", P.cv, icon("download", 17))}
+      <p class="desc st" style="--i:1">Une opportunité en data, en IA ou dans le cloud, une mission freelance ou simplement une question : je réponds volontiers.</p>
+      <div class="contact-grid">
+        <div class="contact-list st" style="--i:2">
+          ${row("mail", "E-mail", P.email, null, `<button class="btn btn-sec btn-sm" id="copy-mail">${icon("copy", 15)} Copier</button><a class="btn btn-sm" href="mailto:${esc(P.email)}">Écrire</a>`)}
+          ${row("user", "LinkedIn", P.linkedin.replace(/^https?:\/\/(www\.)?/, ""), P.linkedin, icon("ext", 17))}
+          ${row("code", "GitHub", P.github.replace(/^https?:\/\/(www\.)?/, ""), P.github, icon("ext", 17))}
+          ${row("file", "CV", "Télécharger en PDF", P.cv, icon("download", 17))}
+        </div>
+        ${av.length ? `
+        <aside class="card avail st" style="--i:3">
+          <p class="label"><span class="dot" aria-hidden="true"></span>Disponibilité</p>
+          <dl>${av.map((a) => `<div><dt>${esc(a.label)}</dt><dd>${esc(a.value)}</dd></div>`).join("")}</dl>
+          <a class="btn btn-block" href="mailto:${esc(P.email)}">${icon("mail", 16)} Me proposer un échange</a>
+        </aside>` : ""}
       </div>
-      <p class="foot st" style="--i:3">© ${new Date().getFullYear()} ${esc(P.name)} · ${esc(P.location)}</p>
+      <div class="cta-band st" style="--i:4">
+        <div><p class="cta-t">Vous recrutez en data, IA ou cloud ?</p><p class="cta-s">Mon CV résume mon parcours en une page, et mes ${PROJECTS.length} projets sont détaillés sur ce site.</p></div>
+        <div class="cta-b"><a class="btn btn-light" href="${esc(P.cv)}" target="_blank" rel="noopener">${icon("download", 16)} Télécharger le CV</a><a class="btn btn-outline-light" href="#projets">Voir les projets ${icon("arrow", 15)}</a></div>
+      </div>
+      <p class="foot st" style="--i:5">© ${new Date().getFullYear()} ${esc(P.name)} · ${esc(P.location)}</p>
     </section>`;
   }
 
@@ -233,45 +257,47 @@
   const moveAllPills = () => { movePill($("#nav")); movePill($(".tabs")); };
 
   /* ---------------- Projets ---------------- */
-  const pageCount = (cat) => Math.max(1, Math.ceil(inCat(cat).length / PAGE_SIZE));
+  const currentList = () => (state.filter === "all" ? PROJECTS : inCat(state.filter));
   function renderGrid(animate) {
-    const grid = $("#pgrid");
-    const list = inCat(state.cat), pages = pageCount(state.cat);
-    const page = Math.min(Math.max(state.page[state.cat] || 0, 0), pages - 1);
-    state.page[state.cat] = page;
-    grid.innerHTML = list.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map(projectCard).join("");
-    $("#pager").hidden = pages < 2;
-    $("#pager-txt").textContent = `${page + 1} / ${pages}`;
-    $$("#pager [data-page]").forEach((b) => (b.disabled = (b.dataset.page < 0 && page === 0) || (b.dataset.page > 0 && page === pages - 1)));
-    grid.setAttribute("aria-labelledby", `tab-${state.cat}`);
-    $("#tab-desc").textContent = catById[state.cat].desc;
-    $$("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === state.cat)));
+    const cats = state.filter === "all" ? S.categories : [catById[state.filter]];
+    let n = 0;
+    $("#pgroups").innerHTML = cats.map((c) => {
+      const list = inCat(c.id);
+      if (!list.length) return "";
+      return `
+      <section class="pgroup" style="--c:var(--c-${c.id})">
+        <div class="pg-head"><h3><span class="cdot"></span>${esc(c.label)}<span class="count">${list.length}</span></h3><p>${esc(c.desc)}</p></div>
+        <div class="pgrid">${list.map((p) => projectCard(p, Math.min(n++, 9))).join("")}</div>
+      </section>`;
+    }).join("");
+    $("#fb-hint").textContent = state.filter === "all"
+      ? `${PROJECTS.length} projets · cliquez sur une catégorie pour filtrer`
+      : `${currentList().length} projets · ${catById[state.filter].label}`;
+    $$("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === state.filter)));
     movePill($(".tabs"));
-    grid.classList.remove("is-switching");
-    if (animate && !reduce) { void grid.offsetWidth; grid.classList.add("is-switching"); }
+    const box = $("#pgroups");
+    box.classList.remove("is-switching");
+    if (animate && !reduce) { void box.offsetWidth; box.classList.add("is-switching"); }
   }
 
-  function setPage(dir) {
-    state.page[state.cat] = (state.page[state.cat] || 0) + dir;
-    renderGrid(true);
-  }
-
-  function setCat(cat, animate = true) {
-    if (!catById[cat] || cat === state.cat) return;
-    state.cat = cat;
+  function setFilter(f, animate = true) {
+    if (f !== "all" && !catById[f]) return;
+    if (f === state.filter && f !== "all") f = "all";   // recliquer sur une catégorie active = tout réafficher
+    if (f === state.filter) return;
+    state.filter = f;
     renderGrid(animate);
+    const bar = $(".filterbar");
+    if (bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
   }
 
   const drawer = $("#drawer");
   function openProject(id) {
     const p = projectsById[id];
     if (!p) return;
-    if (p.cat !== state.cat) setCat(p.cat, false);
-    const pg = Math.floor(inCat(p.cat).indexOf(p) / PAGE_SIZE);
-    if (pg !== state.page[p.cat]) { state.page[p.cat] = pg; renderGrid(false); }
+    if (!currentList().includes(p)) setFilter("all", false);
     if (!state.open) state.lastFocus = document.activeElement;
     state.open = id;
-    const list = inCat(p.cat);
+    const list = currentList();
     $("#drawer-pos").textContent = `${catById[p.cat].label} · ${list.indexOf(p) + 1} / ${list.length}`;
     $("#drawer-body").innerHTML = drawerContent(p);
     $("#drawer-body").scrollTop = 0;
@@ -294,9 +320,9 @@
   }
 
   function stepProject(dir) {
-    const list = inCat(state.cat);
+    const list = currentList();
     const i = list.findIndex((p) => p.id === state.open);
-    location.hash = `projets/${list[(i + dir + list.length) % list.length].id}`;
+    location.hash = `${state.view}/${list[(i + dir + list.length) % list.length].id}`;
   }
 
   /* ---------------- Navigation entre vues ---------------- */
@@ -332,7 +358,7 @@
   function route() {
     const [view, id] = location.hash.replace(/^#\/?/, "").split("/");
     show(view, state.view !== null);
-    if (view === "projets" && id) openProject(id);
+    if (id && projectsById[id]) openProject(id);
     else closeProject();
   }
 
@@ -370,7 +396,7 @@
   function spotlight() {
     if (!matchMedia("(hover: hover)").matches) return;
     document.addEventListener("pointermove", (e) => {
-      const c = e.target.closest?.(".pcard,.feature,.skill,.cert");
+      const c = e.target.closest?.(".pcard,.feature,.skill,.cert,.mini,.avail");
       if (!c) return;
       const r = c.getBoundingClientRect();
       c.style.setProperty("--mx", `${e.clientX - r.left}px`);
@@ -394,13 +420,12 @@
 
     // Clics délégués
     document.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-nav],[data-tab],[data-page],[data-project],[data-close],[data-step],#copy-mail");
+      const t = e.target.closest("[data-nav],[data-tab],[data-project],[data-close],[data-step],#copy-mail");
       if (!t) return;
       if (t.dataset.nav) location.hash = t.dataset.nav;
-      else if (t.dataset.tab) setCat(t.dataset.tab);
-      else if (t.dataset.page) setPage(Number(t.dataset.page));
-      else if (t.dataset.project) location.hash = `projets/${t.dataset.project}`;
-      else if (t.hasAttribute("data-close")) location.hash = "projets";
+      else if (t.dataset.tab) setFilter(t.dataset.tab);
+      else if (t.dataset.project) location.hash = `${state.view}/${t.dataset.project}`;
+      else if (t.hasAttribute("data-close")) location.hash = state.view;
       else if (t.dataset.step) stepProject(Number(t.dataset.step));
       else if (t.id === "copy-mail") {
         navigator.clipboard?.writeText(P.email).then(() => {
@@ -414,13 +439,15 @@
     // Clavier : Échap ferme, ←/→ change de projet
     document.addEventListener("keydown", (e) => {
       if (!state.open) return;
-      if (e.key === "Escape") location.hash = "projets";
+      if (e.key === "Escape") location.hash = state.view;
       if (e.key === "ArrowRight") stepProject(1);
       if (e.key === "ArrowLeft") stepProject(-1);
     });
 
     addEventListener("hashchange", route);
-    addEventListener("resize", () => requestAnimationFrame(moveAllPills), { passive: true });
+    const setStick = () => document.documentElement.style.setProperty("--stick", (innerWidth < 1024 ? $("#side").offsetHeight : 0) + "px");
+    setStick();
+    addEventListener("resize", () => requestAnimationFrame(() => { moveAllPills(); setStick(); }), { passive: true });
     document.fonts?.ready.then(moveAllPills);
 
     route();

@@ -27,6 +27,13 @@ window.SITE = {
     headline: "Je conçois et déploie des solutions data et IA {rotate}.",
     rotate: ["dans le cloud", "pour la logistique", "en production"],   // mots qui défilent dans l'accroche
     now: "amerigo",                      // id du projet mis en avant sur la page Présentation
+    featured: ["rag-slack", "shred", "diabete"],   // projets phares affichés sur la page Présentation
+    availability: [
+      { label: "Recherche", value: "CDI en data, IA ou cloud" },
+      { label: "Disponible", value: "À partir de janvier 2028" },
+      { label: "Mobilité", value: "Île-de-France et international" },
+      { label: "Actuellement", value: "Alternance chez Amerigo Group" }
+    ],
     stats: [
       { value: "2", label: "Certifications AWS et Terraform" },
       { value: "{projects}", label: "Projets présentés" },   // calculé automatiquement
@@ -487,6 +494,10 @@ window.SITE = {
       { date: "2022 – 2024", title: "Cycle préparatoire intégré", org: "CESI École d'Ingénieurs" },
       { date: "2022", title: "Baccalauréat général", org: "Spécialités Physique-Chimie et NSI" }
     ],
+    engagements: [
+      { date: "Bénévolat", title: "Bénévole", org: "Croissant-Rouge tunisien", text: "Actions solidaires sur le terrain." },
+      { date: "Association", title: "Prothèse imprimée en 3D", org: "CESI Maker", text: "Conception d'une prothèse en impression 3D." }
+    ],
     certifications: [
       { title: "AWS Certified Solutions Architect – Associate", org: "Amazon Web Services" },
       { title: "HashiCorp Certified: Terraform Associate", org: "HashiCorp" }
@@ -511,6 +522,6 @@ window.SITE = {
       { title: "Travailler en équipe", text: "En France comme à l'étranger, en français comme en anglais." },
       { title: "Industrialiser", text: "Tests, CI/CD et infrastructure as code pour des solutions qui durent." }
     ],
-    interests: ["DJ et production musicale", "MMA", "Voyages", "Croissant-Rouge tunisien", "CESI Maker (prothèse 3D)"]
+    interests: ["DJ et production musicale", "MMA", "Voyages", "Jeux vidéo", "Bénévolat"]
   }
 };
