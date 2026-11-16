@@ -1,48 +1,37 @@
-# Portfolio Personnel
+# Portfolio
 
-Ce portfolio présente mes projets et compétences en développement web et en intelligence artificielle.
+My personal site: projects, skills and a contact form. Bilingual (French and English) with a light and dark theme.
 
-## Technologies Utilisées
+**Live:** https://selimcc.github.io/SiteWeb_portfolio/
 
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-- Node.js
-- Grafana (Monitoring)
+## Features
 
-## Fonctionnalités
+- French / English switch without reloading, kept in sync for every text and form placeholder
+- Light and dark theme
+- Expandable project cards with links to the code and live demos
+- Contact form sent with EmailJS and protected by reCAPTCHA
+- Cookie consent banner and policy
+- Optional monitoring stack (`monitoring/`): an Express server exposing Prometheus metrics (page views, form submissions), Prometheus, Grafana and node-exporter in Docker Compose
 
-- Design responsive
-- Mode sombre/clair
-- Support multilingue (FR/EN)
-- Formulaire de contact avec reCAPTCHA
-- Monitoring avec Grafana
+## Run it
 
-## Installation
+It is a static site: open `index.html`, or serve the folder:
 
-1. Clonez le repository
-bash
-git clone https://github.com/votre-username/SiteWeb_portfolio.git
+```bash
+npx serve .
+```
 
-2. Installez les dépendances
-bash
-npm install
+Monitoring (optional):
 
-3. Lancez le serveur de développement
-bash
-npm start
+```bash
+npm install && npm start                # metrics server
+cd monitoring && docker compose up -d   # Prometheus :9090, Grafana :3000, node-exporter :9100
+```
 
-## Structure du Projet
-SiteWeb_portfolio/
-├── index.html # Page principale
-├── styles.css # Styles CSS
-├── script.js # JavaScript principal
-├── monitoring/ # Configuration monitoring
-│ ├── server.js
-│ ├── prometheus.yml
-│ └── docker-compose.yml
-└── README.md
+## Stack
+
+HTML, CSS, vanilla JavaScript, EmailJS, reCAPTCHA, Font Awesome; Node.js, Express, prom-client, Prometheus and Grafana for monitoring.
 
 ## Contact
 
-Selim Jabnoun - [selimjabnoun039@gmail.com](mailto:selimjabnoun039@gmail.com)
+Selim Jabnoun · [LinkedIn](https://www.linkedin.com/in/selim-jabnoun-138aa9248) · selimjabnoun039@gmail.com
