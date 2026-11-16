@@ -28,7 +28,8 @@
   const isDone = (status) => /termin|publi|jouable|livr|en ligne/i.test(status);
   const initials = P.name.split(" ").map((w) => w[0]).join("");
 
-  const state = { view: null, cat: S.categories[0].id, open: null, navToken: 0, lastFocus: null };
+  const PAGE_SIZE = 6;
+  const state = { view: null, cat: S.categories[0].id, page: {}, open: null, navToken: 0, lastFocus: null };
 
   /* ---------------- Icônes (traits simples) ---------------- */
   const PATHS = {
@@ -88,11 +89,23 @@
   function viewPresentation() {
     const A = S.about;
     const now = projectsById[P.now];
-    const stats = P.stats.map((s) => `<div class="stat"><p class="v">${esc(String(s.value).replace("{projects}", PROJECTS.length))}</p><p class="l">${esc(s.label)}</p></div>`).join("");
+    const stats = P.stats.map((s) => {
+      const v = String(s.value).replace("{projects}", PROJECTS.length);
+      return `<div class="stat"><p class="v"${/^\d+$/.test(v) ? ` data-num="${v}"` : ""}>${esc(v)}</p><p class="l">${esc(s.label)}</p></div>`;
+    }).join("");
+    const words = P.rotate || [];
+    const rot = words.length
+      ? `<span class="sr-only">${esc(words[0])}</span><span class="rot" aria-hidden="true">${words.map((w, i) => `<span class="${i ? "" : "on"}">${esc(w)}</span>`).join("")}</span>`
+      : "";
+    // La ponctuation qui suit {rotate} est intégrée à chaque mot pour éviter un espace flottant
+    const m = P.headline.match(/\{rotate\}([.!?…]?)/);
+    const punct = m ? m[1] : "";
+    const rotP = punct ? rot.replace(/<\/span>(?=<span|<\/span>$)/g, `${esc(punct)}</span>`) : rot;
+    const headline = rich(P.headline.replace(`{rotate}${punct}`, "{rotate}")).replace("{rotate}", rotP);
     return `
     <section class="view" data-view="presentation" aria-labelledby="t-presentation">
       <p class="kicker st" style="--i:0">Présentation</p>
-      <h1 class="title st" style="--i:0" id="t-presentation">${rich(P.headline)}</h1>
+      <h1 class="title st" style="--i:0" id="t-presentation">${headline}</h1>
       <div class="summary st" style="--i:1">${A.summary.map((t) => `<p>${rich(t)}</p>`).join("")}</div>
       <div class="stats st" style="--i:2">${stats}</div>
       <div class="two">
@@ -123,15 +136,22 @@
         <div><p class="kicker">Projets</p><h2 class="title" id="t-projets">Ce que j'ai réalisé</h2></div>
         <div class="seg tabs" role="tablist" aria-label="Catégories de projets"><span class="seg-pill" aria-hidden="true"></span>${tabs}</div>
       </div>
-      <p class="desc st" style="--i:1" id="tab-desc"></p>
+      <div class="proj-bar st" style="--i:1">
+        <p class="desc" id="tab-desc"></p>
+        <div class="pager" id="pager" hidden>
+          <button class="icon-btn" data-page="-1" aria-label="Page précédente">${icon("arrow", 16)}</button>
+          <span id="pager-txt" aria-live="polite"></span>
+          <button class="icon-btn" data-page="1" aria-label="Page suivante">${icon("arrow", 16)}</button>
+        </div>
+      </div>
       <div class="pgrid" id="pgrid" role="tabpanel"></div>
     </section>`;
   }
 
   function viewPath() {
     const J = S.journey;
-    const tl = (items) => `<ul class="tl">${items.map((e) => `
-      <li><p class="date">${esc(e.date)}</p><h3>${esc(e.title)}</h3><p class="org">${esc(e.org)}</p>${e.text ? `<p>${esc(e.text)}</p>` : ""}</li>`).join("")}</ul>`;
+    const tl = (items) => `<ul class="tl">${items.map((e, i) => `
+      <li style="--d:${i}"><p class="date">${esc(e.date)}</p><h3>${esc(e.title)}</h3><p class="org">${esc(e.org)}</p>${e.text ? `<p>${esc(e.text)}</p>` : ""}</li>`).join("")}</ul>`;
     return `
     <section class="view" data-view="parcours" aria-labelledby="t-parcours">
       <div class="vh-row st" style="--i:0">
@@ -155,7 +175,7 @@
         <div class="card cert"><span class="ic">${icon("award", 22)}</span><span><strong>${esc(c.title)}</strong><span>${esc(c.org)}</span></span></div>`).join("")}
       </div>
       <div class="skills">${J.skills.map((g, i) => `
-        <div class="card skill st" style="--i:${i + 2}"><h4>${esc(g.group)}</h4>${tags(g.items)}</div>`).join("")}
+        <div class="card skill st" style="--i:${i + 2}"><h4>${esc(g.group)}</h4><div class="tags">${g.items.map((t, j) => `<span class="tag" style="--t:${j}">${esc(t)}</span>`).join("")}</div></div>`).join("")}
       </div>
     </section>`;
   }
@@ -213,15 +233,27 @@
   const moveAllPills = () => { movePill($("#nav")); movePill($(".tabs")); };
 
   /* ---------------- Projets ---------------- */
+  const pageCount = (cat) => Math.max(1, Math.ceil(inCat(cat).length / PAGE_SIZE));
   function renderGrid(animate) {
     const grid = $("#pgrid");
-    grid.innerHTML = inCat(state.cat).map(projectCard).join("");
+    const list = inCat(state.cat), pages = pageCount(state.cat);
+    const page = Math.min(Math.max(state.page[state.cat] || 0, 0), pages - 1);
+    state.page[state.cat] = page;
+    grid.innerHTML = list.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map(projectCard).join("");
+    $("#pager").hidden = pages < 2;
+    $("#pager-txt").textContent = `${page + 1} / ${pages}`;
+    $$("#pager [data-page]").forEach((b) => (b.disabled = (b.dataset.page < 0 && page === 0) || (b.dataset.page > 0 && page === pages - 1)));
     grid.setAttribute("aria-labelledby", `tab-${state.cat}`);
     $("#tab-desc").textContent = catById[state.cat].desc;
     $$("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === state.cat)));
     movePill($(".tabs"));
     grid.classList.remove("is-switching");
     if (animate && !reduce) { void grid.offsetWidth; grid.classList.add("is-switching"); }
+  }
+
+  function setPage(dir) {
+    state.page[state.cat] = (state.page[state.cat] || 0) + dir;
+    renderGrid(true);
   }
 
   function setCat(cat, animate = true) {
@@ -235,6 +267,8 @@
     const p = projectsById[id];
     if (!p) return;
     if (p.cat !== state.cat) setCat(p.cat, false);
+    const pg = Math.floor(inCat(p.cat).indexOf(p) / PAGE_SIZE);
+    if (pg !== state.page[p.cat]) { state.page[p.cat] = pg; renderGrid(false); }
     if (!state.open) state.lastFocus = document.activeElement;
     state.open = id;
     const list = inCat(p.cat);
@@ -289,6 +323,7 @@
       window.scrollTo({ top: 0, behavior: "instant" });
       if (animate && !reduce) { void next.offsetWidth; next.classList.add("is-entering"); }
       if (view === "projets") requestAnimationFrame(() => movePill($(".tabs")));
+      if (view === "presentation") countUp();
     };
     if (prev && animate && !reduce) { prev.classList.add("is-leaving"); setTimeout(enter, 140); }
     else enter();
@@ -299,6 +334,48 @@
     show(view, state.view !== null);
     if (view === "projets" && id) openProject(id);
     else closeProject();
+  }
+
+  /* ---------------- Animations ---------------- */
+  function countUp() {
+    $$("[data-num]").forEach((el) => {
+      const target = Number(el.dataset.num);
+      if (reduce || target < 2) { el.textContent = target; return; }
+      const t0 = performance.now(), dur = 1100;
+      const tick = (t) => {
+        const k = Math.min(1, (t - t0) / dur);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
+  function startRotator() {
+    const rot = $(".rot");
+    if (!rot || reduce) return;
+    const words = $$("span", rot);
+    if (words.length < 2) return;
+    let i = 0;
+    setInterval(() => {
+      if (state.view !== "presentation" || document.hidden) return;
+      const cur = words[i]; i = (i + 1) % words.length;
+      cur.classList.remove("on"); cur.classList.add("out");
+      words[i].classList.remove("out"); words[i].classList.add("on");
+      setTimeout(() => cur.classList.remove("out"), 600);
+    }, 2800);
+  }
+
+  // Halo lumineux qui suit le curseur sur les cartes
+  function spotlight() {
+    if (!matchMedia("(hover: hover)").matches) return;
+    document.addEventListener("pointermove", (e) => {
+      const c = e.target.closest?.(".pcard,.feature,.skill,.cert");
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      c.style.setProperty("--my", `${e.clientY - r.top}px`);
+    }, { passive: true });
   }
 
   /* ---------------- Init ---------------- */
@@ -317,10 +394,11 @@
 
     // Clics délégués
     document.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-nav],[data-tab],[data-project],[data-close],[data-step],#copy-mail");
+      const t = e.target.closest("[data-nav],[data-tab],[data-page],[data-project],[data-close],[data-step],#copy-mail");
       if (!t) return;
       if (t.dataset.nav) location.hash = t.dataset.nav;
       else if (t.dataset.tab) setCat(t.dataset.tab);
+      else if (t.dataset.page) setPage(Number(t.dataset.page));
       else if (t.dataset.project) location.hash = `projets/${t.dataset.project}`;
       else if (t.hasAttribute("data-close")) location.hash = "projets";
       else if (t.dataset.step) stepProject(Number(t.dataset.step));
@@ -347,6 +425,9 @@
 
     route();
     if (!reduce) $(`.view[data-view="${state.view}"]`).classList.add("is-entering");
+    if (state.view === "presentation") countUp();
+    startRotator();
+    spotlight();
     requestAnimationFrame(moveAllPills);
   }
 

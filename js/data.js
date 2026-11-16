@@ -3,6 +3,7 @@
    - Ajouter un projet : copie un bloc dans `projects` et change les valeurs.
    - `cat` doit correspondre à un id de `categories`.
    - `hidden: true` masque un projet sans le supprimer.
+   - Au-delà de 6 projets, une catégorie est paginée automatiquement.
    - `image` (optionnel) : "assets/projects/mon-projet.jpg", format 16:9.
    - `links` (optionnel) : { github: "https://…", demo: "https://…" }.
    - Dans les textes, *mot* s'affiche dans la couleur d'accent.
@@ -23,7 +24,8 @@ window.SITE = {
       { icon: "award", text: "Certifié AWS Solutions Architect et Terraform" },
       { icon: "globe", text: "Français · Anglais (TOEIC 920) · Arabe" }
     ],
-    headline: "Je conçois et déploie des solutions data et IA *dans le cloud*.",
+    headline: "Je conçois et déploie des solutions data et IA {rotate}.",
+    rotate: ["dans le cloud", "pour la logistique", "en production"],   // mots qui défilent dans l'accroche
     now: "amerigo",                      // id du projet mis en avant sur la page Présentation
     stats: [
       { value: "2", label: "Certifications AWS et Terraform" },
@@ -89,6 +91,37 @@ window.SITE = {
       links: {}
     },
     {
+      id: "site-vitrine", cat: "travail", status: "En cours", year: "2026",
+      title: "Site vitrine pour un client",
+      where: "Freelance · Open Solution & Innovation",
+      tagline: "Une première version de site vitrine, présentée au client en démo vidéo puis ajustée selon ses retours.",
+      context: "Le client voulait présenter son offre clairement en ligne. J'ai livré une première version, puis j'ai fait évoluer le site au fil des échanges.",
+      did: [
+        "J'ai intégré un site responsive : navigation, lisibilité, formulaire de contact et présentation de l'offre.",
+        "J'ai présenté la V1 en démonstration vidéo.",
+        "J'ai recueilli les retours du client sur le logo, les couleurs et les modifications souhaitées, puis je les ai intégrés."
+      ],
+      learned: "Un projet client se réussit autant par l'écoute que par le code.",
+      stack: ["HTML / CSS / JS", "Responsive", "UX / UI", "Relation client"],
+      links: {}
+    },
+    {
+      id: "diabete", cat: "travail", status: "Terminé",
+      title: "Prédiction du diabète",
+      where: "Projet PBL · CESI",
+      tagline: "Prédire le diabète à partir des 253 680 réponses de l'enquête BRFSS du CDC, avec des réseaux de neurones explicables.",
+      context: "C'est un projet d'apprentissage par problème : construire un modèle de classification fiable sur des données de santé déséquilibrées, et pouvoir expliquer ses décisions.",
+      did: [
+        "J'ai préparé les données : typage métier des variables, 24 206 doublons supprimés, découpage stratifié 70/15/15.",
+        "J'ai entraîné et comparé plusieurs architectures MLP, en gérant le déséquilibre des classes et le surapprentissage.",
+        "J'ai rendu les prédictions interprétables avec SHAP et LIME.",
+        "J'ai travaillé les métriques, la calibration du modèle et les aspects MLOps."
+      ],
+      learned: "Un modèle de santé doit être juste, mais aussi explicable.",
+      stack: ["Python", "TensorFlow / Keras", "MLP", "SHAP", "LIME", "MLOps"],
+      links: { github: "https://github.com/Selimcc/diabetes-prediction-deep-learning" }
+    },
+    {
       id: "leyenda", cat: "travail", status: "En cours", year: "2026",
       title: "Légendage automatique d'images",
       where: "Projet d'équipe · CESI",
@@ -104,18 +137,65 @@ window.SITE = {
       links: {}
     },
     {
-      id: "pneumonie", cat: "travail", status: "Terminé",
-      title: "Détection de pneumonie",
-      where: "Projet scientifique · CESI",
-      tagline: "Un modèle de deep learning qui repère une pneumonie sur une radiographie du thorax.",
-      context: "Dans ce projet de démarche scientifique, il fallait poser une hypothèse, la tester et documenter les résultats comme dans un article.",
+      id: "api-capteurs", cat: "travail", status: "Terminé",
+      title: "API de normalisation « Données sauvages »",
+      where: "Projet de développement · CESI",
+      tagline: "Une API REST qui récupère, valide et normalise des données de pollution venant de capteurs aux formats différents.",
+      context: "Chaque capteur envoie ses mesures dans son propre format. Il fallait exposer une structure unique et fiable à une interface ou à un client.",
       did: [
-        "J'ai entraîné un DenseNet-121 par transfer learning sur des radiographies thoraciques.",
-        "J'ai rédigé un rapport scientifique complet, retravaillé sur cinq versions.",
-        "J'ai réalisé un poster scientifique au format A0."
+        "J'ai conçu une API REST avec Node.js et Express pour collecter les mesures.",
+        "Les données sont validées et normalisées avec Mongoose avant d'être stockées dans MongoDB.",
+        "L'API renvoie un JSON cohérent, quel que soit le capteur d'origine.",
+        "L'environnement est conteneurisé avec Docker et testé avec Postman."
       ],
-      learned: "La rigueur méthodologique passe avant le score.",
-      stack: ["Python", "DenseNet-121", "Transfer learning", "Imagerie médicale"],
+      learned: "La qualité d'une API se joue sur la validation des données en entrée.",
+      stack: ["Node.js", "Express", "MongoDB", "Mongoose", "Docker", "Postman"],
+      links: {}
+    },
+    {
+      id: "air-quality", cat: "travail", status: "Terminé",
+      title: "Qualité de l'air : architecture Edge/Cloud",
+      where: "Projet IoT · CESI",
+      tagline: "Surveiller le CO₂, la température et le bruit avec des alertes en local et un historique dans le cloud.",
+      context: "Le projet portait sur la surveillance de paramètres de confort dans un bâtiment, avec un choix d'architecture à justifier.",
+      did: [
+        "Nous avons analysé les besoins et comparé une architecture tout Cloud et une architecture Edge.",
+        "Nous avons retenu une approche hybride : la réaction aux alertes se fait en local, au plus près des capteurs.",
+        "Les données remontent dans le cloud pour l'historique, les tableaux de bord et les analyses."
+      ],
+      learned: "Le bon traitement au bon endroit : la latence et le coût guident l'architecture.",
+      stack: ["IoT", "Edge computing", "Cloud", "Capteurs", "Temps réel"],
+      links: {}
+    },
+    {
+      id: "lora", cat: "travail", status: "Terminé",
+      title: "Simulation LoRa et ZigBee",
+      where: "Projet réseaux · CESI",
+      tagline: "Simuler la réception radio selon la distance, et rendre le modèle de propagation LoRa plus réaliste.",
+      context: "L'objectif était de comparer deux technologies radio de l'IoT et de comprendre comment la qualité de réception se dégrade avec la distance.",
+      did: [
+        "J'ai simulé l'évolution de la réception des paquets en fonction de la distance.",
+        "J'ai analysé le RSSI, le SNR et le taux de paquets reçus.",
+        "J'ai enrichi le modèle LoRa pour tenir compte des variations de propagation."
+      ],
+      learned: "Un modèle de simulation n'a de valeur que s'il reste proche du terrain.",
+      stack: ["Python", "Simulation", "LoRa", "ZigBee", "RSSI / SNR"],
+      links: {}
+    },
+    {
+      id: "pneumonie", cat: "travail", status: "Étude",
+      title: "Détection de pneumonie",
+      where: "Projet scientifique (ADS) · CESI",
+      tagline: "Étudier comment le deep learning peut aider à repérer une pneumonie sur des radiographies pulmonaires.",
+      context: "Dans ce projet de démarche scientifique, il fallait définir une problématique, étudier l'état de l'art et proposer une méthodologie, comme pour un article.",
+      did: [
+        "J'ai posé la problématique et réalisé l'état de l'art des approches de vision par ordinateur en imagerie médicale.",
+        "J'ai proposé une méthodologie fondée sur un DenseNet-121 et le transfer learning, et défini les métriques d'évaluation.",
+        "J'ai analysé les limites d'un outil d'aide au diagnostic.",
+        "J'ai rédigé un rapport scientifique, retravaillé sur cinq versions, et réalisé un poster A0."
+      ],
+      learned: "En santé, savoir dire ce qu'un modèle ne peut pas faire est aussi important que le reste.",
+      stack: ["Deep learning", "Computer vision", "Imagerie médicale", "Recherche bibliographique"],
       links: {}
     },
     {
@@ -159,6 +239,50 @@ window.SITE = {
       stack: ["Business model", "Pitch"],
       links: {}
     },
+    {
+      id: "erp-agents", cat: "travail", status: "Étude de cas", hidden: true,
+      title: "Agents IA pour un module ERP",
+      where: "Prosit · CESI",
+      tagline: "Un module ERP capable de détecter des anomalies sur les commandes, d'anticiper les retards et de recommander des actions.",
+      context: "C'est une étude de cas sur le bon usage des agents IA dans un ERP.",
+      did: ["J'ai analysé les besoins fonctionnels du module de gestion des commandes.", "J'ai distingué les cas où un agent IA apporte de la valeur de ceux où une règle métier ou un algorithme classique suffit."],
+      learned: "L'IA n'est pas toujours la bonne réponse.",
+      stack: ["ERP", "Agents IA", "Détection d'anomalies"],
+      links: {}
+    },
+    {
+      id: "cats-dogs", cat: "travail", status: "Workshop", hidden: true,
+      title: "Chats et chiens par transfer learning",
+      where: "Workshop · CESI",
+      tagline: "Classifier des images à partir du modèle pré-entraîné InceptionV3.",
+      context: "C'est un workshop pédagogique sur le pipeline de transfer learning.",
+      did: ["J'ai préparé les images et extrait leurs caractéristiques avec InceptionV3."],
+      learned: "Réutiliser un modèle pré-entraîné, et savoir quand le faire.",
+      stack: ["Python", "TensorFlow / Keras", "InceptionV3"],
+      links: {}
+    },
+    {
+      id: "captioning-workshop", cat: "travail", status: "Workshop", hidden: true,
+      title: "Génération de légendes (workshop)",
+      where: "Workshop · CESI",
+      tagline: "Décrire automatiquement une image avec InceptionV3, un GRU et un mécanisme d'attention de Bahdanau.",
+      context: "C'est un workshop sur le jeu de données COCO.",
+      did: ["J'ai étudié une architecture encodeur-décodeur avec attention."],
+      learned: "Relier vision et langage.",
+      stack: ["Python", "TensorFlow / Keras", "GRU", "Attention", "COCO"],
+      links: {}
+    },
+    {
+      id: "jakarta", cat: "travail", status: "Terminé", hidden: true,
+      title: "Jakarta et les limites planétaires",
+      where: "Présentation · CESI",
+      tagline: "Les vulnérabilités environnementales de Jakarta : inondations, réchauffement, biodiversité et ressources en eau.",
+      context: "C'est un travail de synthèse et de présentation orale à deux voix.",
+      did: ["J'ai fait les recherches et structuré la présentation.", "J'ai rédigé un script oral à deux voix."],
+      learned: "Vulgariser un sujet complexe.",
+      stack: ["Recherche", "Synthèse", "Présentation"],
+      links: {}
+    },
 
     /* ---------- APPRENTISSAGE ---------- */
     {
@@ -195,6 +319,21 @@ window.SITE = {
       links: { github: "https://github.com/Selimcc/Shred", demo: "https://selimcc.github.io/Shred/" }
     },
     {
+      id: "entrepot-2d", cat: "apprentissage", status: "En cours", year: "2026",
+      title: "Plan 2D d'entrepôt depuis un CSV",
+      where: "Projet personnel · Logistique",
+      tagline: "Transformer un export d'emplacements en plan d'entrepôt lisible : zones, allées, travées et niveaux.",
+      context: "C'est un outil Python né de ma découverte de la logistique : rendre visible ce qu'un fichier d'emplacements décrit en lignes de texte.",
+      did: [
+        "J'ai décodé le format des codes d'emplacement : zone, allée, travée, niveau.",
+        "J'ai généré un plan 2D avec les zones de réception, de stockage et d'expédition.",
+        "J'ai calculé des distances logistiques entre emplacements."
+      ],
+      learned: "Visualiser une donnée, c'est souvent le premier pas pour l'optimiser.",
+      stack: ["Python", "CSV", "Visualisation", "Logistique"],
+      links: {}
+    },
+    {
       id: "faces", cat: "apprentissage", status: "Terminé", year: "Sept. – Nov. 2024",
       title: "Reconnaissance faciale",
       where: "Projet personnel",
@@ -208,22 +347,6 @@ window.SITE = {
       learned: "Les bases de la computer vision, et l'importance de données variées.",
       stack: ["Python", "TensorFlow", "Keras", "Kivy", "Modèle siamois"],
       links: {}
-    },
-    {
-      id: "diabete", cat: "apprentissage", status: "Terminé",
-      title: "Prédiction du diabète",
-      where: "Préparation des données",
-      tagline: "Préparer les 253 680 réponses de l'enquête BRFSS 2015 du CDC pour prédire le diabète.",
-      context: "C'est un projet centré sur l'étape la plus sous-estimée du machine learning : la préparation des données.",
-      did: [
-        "J'ai typé les variables selon leur sens métier et supprimé 24 206 doublons.",
-        "J'ai analysé les valeurs aberrantes et mené une analyse exploratoire.",
-        "J'ai fait un découpage stratifié 70/15/15, avec une normalisation ajustée sur le seul jeu d'entraînement.",
-        "Chaque choix est justifié dans le notebook."
-      ],
-      learned: "Un modèle ne vaut que les données qu'on lui donne.",
-      stack: ["Python", "pandas", "scikit-learn", "seaborn", "Jupyter"],
-      links: { github: "https://github.com/Selimcc/diabetes-prediction-deep-learning" }
     },
     {
       id: "powerbi", cat: "apprentissage", status: "Terminé",
@@ -334,6 +457,21 @@ window.SITE = {
       learned: "L'IA générative demande autant de méthode que de créativité.",
       stack: ["ComfyUI", "Wan 2.2", "IA générative"],
       links: {}
+    },
+    {
+      id: "bracelet", cat: "fun", status: "Concept",
+      title: "Bracelet réveil vibrant",
+      where: "Projet DIY",
+      tagline: "Un bracelet autonome qui réveille par vibration, sans réveiller toute la pièce.",
+      context: "C'est une idée de maker : un objet simple, utile au quotidien, entièrement conçu à la main.",
+      did: [
+        "J'ai conçu l'architecture : microcontrôleur, moteur vibrant et batterie.",
+        "Je choisis les composants et je prépare un boîtier imprimé en 3D.",
+        "Le prototype assemblé est la prochaine étape."
+      ],
+      learned: "Passer d'une idée à un objet demande de penser énergie, taille et confort.",
+      stack: ["Électronique", "Microcontrôleur", "Embarqué", "Impression 3D"],
+      links: {}
     }
   ],
 
@@ -356,7 +494,7 @@ window.SITE = {
     skills: [
       { group: "IA & ML", items: ["Apprentissage supervisé et non supervisé", "Deep learning", "Computer vision", "RAG", "Modèles de langage"] },
       { group: "Data & Cloud", items: ["AWS", "Pipelines de données", "SQL / NoSQL", "Power BI"] },
-      { group: "DevOps", items: ["Terraform", "GitLab CI/CD", "GitHub Actions", "Bash"] },
+      { group: "DevOps", items: ["Terraform", "GitLab CI/CD", "GitHub Actions", "Docker", "Bash"] },
       { group: "Langages", items: ["Python", "SQL", "JavaScript", "C", "C++", "Bash"] },
       { group: "Soft skills", items: ["Observation", "Communication", "Travail en équipe", "Adaptabilité", "Résolution de problèmes"] },
       { group: "Langues", items: ["Français (natif)", "Anglais (TOEIC 920)", "Arabe (courant)"] }

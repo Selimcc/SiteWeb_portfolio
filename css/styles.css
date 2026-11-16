@@ -273,6 +273,57 @@ a.crow:hover{background:#FAFBFC}
 }
 @media (max-width:400px){.tabs .count{display:none}}
 
+/* ============ Dynamisme (sobre) ============ */
+/* Fond : grille de points discrète + halo bleu qui respire */
+.content{position:relative;isolation:isolate;overflow-x:hidden;overflow-x:clip}
+.content::before{content:"";position:absolute;inset:0 0 auto 0;height:min(520px,70vh);z-index:-1;pointer-events:none;
+  background-image:radial-gradient(rgba(30,58,138,.16) 1px,transparent 1.2px);background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 90% at 85% 0%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse 70% 90% at 85% 0%,#000 10%,transparent 70%)}
+.content::after{content:"";position:absolute;top:-180px;right:-120px;width:520px;height:520px;z-index:-1;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle,rgba(47,86,198,.13),transparent 65%);animation:breathe 9s ease-in-out infinite alternate}
+@keyframes breathe{from{transform:translate(0,0) scale(1)}to{transform:translate(-50px,30px) scale(1.12)}}
+
+/* Accroche : mot qui défile */
+.rot{display:inline-grid;vertical-align:bottom;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.rot>span{grid-area:1/1;color:var(--accent);opacity:0;transform:translateY(.55em);transition:opacity .5s var(--ease),transform .6s var(--ease);white-space:nowrap}
+.rot>span.on{opacity:1;transform:none}
+.rot>span.out{opacity:0;transform:translateY(-.55em)}
+
+/* Halo qui suit le curseur */
+.pcard,.feature,.skill,.cert{position:relative;overflow:hidden}
+.pcard::after,.feature::after,.skill::after,.cert::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(47,86,198,.09),transparent 65%)}
+.pcard:hover::after,.feature:hover::after,.skill:hover::after,.cert:hover::after{opacity:1}
+.pcard>*,.feature>*,.skill>*,.cert>*{position:relative;z-index:1}
+
+/* Timeline qui se dessine à l'arrivée */
+.view.is-entering .tl li::after{animation:grow .7s var(--ease) both;transform-origin:top;animation-delay:calc(var(--d,0) * 120ms + .25s)}
+.view.is-entering .tl li::before{animation:pop .45s var(--ease) both;animation-delay:calc(var(--d,0) * 120ms + .15s)}
+@keyframes grow{from{transform:scaleY(0)}to{transform:none}}
+@keyframes pop{from{transform:scale(0)}to{transform:none}}
+
+/* Tags des compétences en cascade */
+.view.is-entering .skill .tag{animation:in .4s var(--ease) both;animation-delay:calc(var(--i,0) * 45ms + var(--t,0) * 25ms + .15s)}
+
+/* Panneau projet : sections en cascade */
+.drawer.open .drawer-body>*{animation:in .5s var(--ease) both}
+.drawer.open .drawer-body>*:nth-child(2){animation-delay:.05s}
+.drawer.open .drawer-body>*:nth-child(3){animation-delay:.1s}
+.drawer.open .drawer-body>*:nth-child(4){animation-delay:.15s}
+.drawer.open .drawer-body>*:nth-child(5){animation-delay:.2s}
+.drawer.open .drawer-body>*:nth-child(n+6){animation-delay:.25s}
+
+/* Pagination des projets */
+.proj-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px}
+.proj-bar .desc{margin-top:0}
+.pager{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+.pager[hidden]{display:none}
+.pager .icon-btn{border:1px solid var(--line);background:var(--bg)}
+.pager .icon-btn:first-child .ico{transform:rotate(180deg)}
+.pager .icon-btn:disabled{opacity:.35;cursor:default;background:var(--bg)}
+.pager .icon-btn:not(:disabled):hover{border-color:#CBD2DC;color:var(--accent)}
+@media (max-width:1023px){.content::after{width:340px;height:340px;top:-120px}}
+
 /* ============ Moins d'animations si l'utilisateur le demande ============ */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
