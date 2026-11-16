@@ -1,37 +1,44 @@
-# Portfolio
+# Portfolio · Selim Jabnoun
 
-My personal site: projects, skills and a contact form. Bilingual (French and English) with a light and dark theme.
+Personal site: projects, experience, skills and contact. Static site, no framework and no build step: Vercel (or any static host) serves it as is.
 
-**Live:** https://selimcc.github.io/SiteWeb_portfolio/
+## Structure
 
-## Features
+```
+index.html          Page shell (SEO meta, layout, project panel)
+css/styles.css      All styles. Colors, font and sizes are variables in :root
+js/data.js          ALL THE CONTENT: profile, projects, experience, skills, links
+js/app.js           Rendering and navigation (no need to touch it to edit content)
+assets/photo.jpg    Profile photo
+assets/cv.pdf       CV
+assets/projects/    Optional project images (16:9)
+assets/fonts/       Self-hosted Inter font
+vercel.json         Vercel config (clean URLs)
+```
 
-- French / English switch without reloading, kept in sync for every text and form placeholder
-- Light and dark theme
-- Expandable project cards with links to the code and live demos
-- Contact form sent with EmailJS and protected by reCAPTCHA
-- Cookie consent banner and policy
-- Optional monitoring stack (`monitoring/`): an Express server exposing Prometheus metrics (page views, form submissions), Prometheus, Grafana and node-exporter in Docker Compose
+## Editing content
 
-## Run it
+Everything lives in `js/data.js`:
 
-It is a static site: open `index.html`, or serve the folder:
+- **Add a project**: copy a block in `projects`, give it a unique `id` and a `cat` (`travail`, `apprentissage` or `fun`). Counters and tabs update automatically.
+- **Hide a project** without deleting it: `hidden: true`.
+- **Links**: `links: { github: "https://…", demo: "https://…" }`.
+- **Image**: `image: "assets/projects/name.jpg"`.
+- **Featured project** on the home view: `person.now`.
+- `*text*` is rendered in the accent color.
+
+## Shareable links
+
+Each view and each project has its own URL: `/#presentation`, `/#projets`, `/#projets/pricer`, `/#parcours`, `/#competences`, `/#contact`.
+
+## Run locally
+
+Open `index.html`, or serve the folder:
 
 ```bash
 npx serve .
 ```
 
-Monitoring (optional):
+## Deploy
 
-```bash
-npm install && npm start                # metrics server
-cd monitoring && docker compose up -d   # Prometheus :9090, Grafana :3000, node-exporter :9100
-```
-
-## Stack
-
-HTML, CSS, vanilla JavaScript, EmailJS, reCAPTCHA, Font Awesome; Node.js, Express, prom-client, Prometheus and Grafana for monitoring.
-
-## Contact
-
-Selim Jabnoun · [LinkedIn](https://www.linkedin.com/in/selim-jabnoun-138aa9248) · selimjabnoun039@gmail.com
+Import the repository in Vercel (Framework preset: Other, no build command). Every push to `main` redeploys the site.
