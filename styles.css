@@ -1026,3 +1026,33 @@ input:checked + .slider:before {
     opacity: 1;
     transform: scale(1.1);
 }
+
+/* Project links and social links */
+.project-links,
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0.8rem 0;
+}
+
+.project-links a,
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 999px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.project-links a:hover,
+.social-links a:hover {
+    background: var(--primary-color);
+    color: #fff;
+}

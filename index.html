@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,8 @@
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://cdn.jsdelivr.net/npm/@emailjs/; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-src https://www.google.com/recaptcha/; connect-src https://api.emailjs.com/">
     <meta name="cookie-policy" content="Ce site utilise des cookies pour améliorer votre expérience utilisateur.">
-    <title>Selim Jabnoun - Portfolio</title>
+    <title>Selim Jabnoun · Portfolio</title>
+    <meta name="description" content="Élève ingénieur CESI (Big Data et IA) : applications web et mobiles, data et IA.">
     <link rel="stylesheet" href="styles.css">
     <script src="https://www.google.com/recaptcha/api.js?hl=en" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -50,10 +51,14 @@
         <div class="container hero-content">
             <div class="hero-text">
                 <h2 data-fr="Bonjour, je suis Selim" data-en="Hi, I'm Selim">Bonjour, je suis Selim</h2>
-                <p data-fr="Un étudiant en Informatique spécialisé en IA et Science des Données." 
-                   data-en="A Computer Engineering Student specializing in AI and Data Science.">
-                    Un étudiant Informatique spécialisé en IA et Science des Données.
+                <p data-fr="Élève ingénieur en dernière année à CESI (Big Data et IA), en alternance chez Groupe Automotor. Je conçois des applications web et mobiles de bout en bout, de l'API aux données."
+                   data-en="Final-year engineering student at CESI (Big Data and AI), work-study at Groupe Automotor. I build web and mobile apps end to end, from the API to the data.">
+                    Élève ingénieur en dernière année à CESI (Big Data et IA), en alternance chez Groupe Automotor. Je conçois des applications web et mobiles de bout en bout, de l'API aux données.
                 </p>
+                <div class="social-links">
+                    <a href="https://github.com/Selimcc" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/selim-jabnoun-138aa9248" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
                 <div class="soft-skills">
                     <h3 data-fr="Compétences Personnelles" data-en="Soft Skills">Compétences Personnelles</h3>
                     <div class="skills-grid">
@@ -86,8 +91,7 @@
             </div>
             <div class="profile-card">
                 <div class="profile-image">
-                    <!-- Remplacez le chemin par le chemin de votre image -->
-                    <img src="\SiteWeb_portfolio\Pro.JPG" alt="Selim Jabnoun">
+                    <img src="profile.jpg" alt="Selim Jabnoun" width="450" height="800">
                 </div>
             </div>
         </div>
@@ -98,6 +102,177 @@
         <div class="container">
             <h2 data-fr="Mes Projets" data-en="My Projects">Mes Projets</h2>
             <div class="project-list">
+                <!-- Shred -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="🏋️ Shred, coach sportif et nutrition" data-en="🏋️ Shred, training and nutrition coach">
+                            🏋️ Shred, coach sportif et nutrition
+                        </h3>
+                        <p data-fr="Application installable (PWA) pour suivre ses séances et ses repas, avec série quotidienne, rappels push et coach IA qui connaît ton programme."
+                           data-en="Installable app (PWA) to track workouts and meals, with a daily streak, push reminders and an AI coach that knows your program.">
+                            Application installable (PWA) pour suivre ses séances et ses repas, avec série quotidienne, rappels push et coach IA qui connaît ton programme.
+                        </p>
+                        <div class="project-links">
+                            <a class="project-link" href="https://github.com/Selimcc/Shred" target="_blank" rel="noopener"><i class="fab fa-github"></i> <span data-fr="Code" data-en="Code">Code</span></a>
+                            <a class="project-link" href="https://selimcc.github.io/Shred/" target="_blank" rel="noopener"><i class="fas fa-play"></i> <span data-fr="Démo" data-en="Demo">Démo</span></a>
+                        </div>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Tout fonctionne hors ligne sur le téléphone ; la sauvegarde est chiffrée de bout en bout (PBKDF2 + AES-GCM), le serveur ne peut pas la lire. Les notifications Web Push sont codées sans dépendance (VAPID, aes128gcm). Le coach s'appuie sur une recherche BM25 locale dans l'historique et n'envoie au modèle que les extraits utiles. Générateur de programmes selon le physique visé, plans course et Hyrox, meal plan, 212 tests automatisés, déploiement en une commande sur Cloudflare."
+                               data-en="Everything runs offline on the phone; the backup is end-to-end encrypted (PBKDF2 + AES-GCM) and unreadable by the server. Web Push is written without any dependency (VAPID, aes128gcm). The coach uses a local BM25 search over the history and only sends the relevant snippets to the model. Program generator driven by the target physique, running and Hyrox plans, meal plan, 212 automated tests, one-command deploy to Cloudflare.">
+                                Tout fonctionne hors ligne sur le téléphone ; la sauvegarde est chiffrée de bout en bout (PBKDF2 + AES-GCM), le serveur ne peut pas la lire. Les notifications Web Push sont codées sans dépendance (VAPID, aes128gcm). Le coach s'appuie sur une recherche BM25 locale dans l'historique et n'envoie au modèle que les extraits utiles. Générateur de programmes selon le physique visé, plans course et Hyrox, meal plan, 212 tests automatisés, déploiement en une commande sur Cloudflare.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">React 19</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">Cloudflare Workers</span>
+                                <span class="tech-tag">Web Push</span>
+                                <span class="tech-tag">WebCrypto</span>
+                                <span class="tech-tag">API Claude</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricer -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="🛒 Pricer, comparateur de prix communautaire" data-en="🛒 Pricer, community grocery price comparison">
+                            🛒 Pricer, comparateur de prix communautaire
+                        </h3>
+                        <p data-fr="Scanner un produit, voir où il est le moins cher autour de soi et savoir dans quel magasin faire sa liste de courses."
+                           data-en="Scan a product, see where it is cheapest around you and find out which store to do your shopping list in.">
+                            Scanner un produit, voir où il est le moins cher autour de soi et savoir dans quel magasin faire sa liste de courses.
+                        </p>
+                        <div class="project-links">
+                            <a class="project-link" href="https://github.com/Selimcc/Pricer" target="_blank" rel="noopener"><i class="fab fa-github"></i> <span data-fr="Code" data-en="Code">Code</span></a>
+                        </div>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="API FastAPI sur PostgreSQL/PostGIS (recherches autour de moi avec index GiST), magasins réels importés d'OpenStreetMap, prix Open Prices importés chaque nuit. Une photo de ticket de caisse donne tous les prix des courses : OCR Tesseract, analyse des tickets français et mémoire collective par enseigne pour rapprocher chaque ligne d'un produit. Score de confiance, contrôle GPS, détection d'anomalies, migrations Alembic, tests sur une vraie base PostGIS et CI GitHub Actions. App mobile en React Native (Expo)."
+                               data-en="FastAPI on PostgreSQL/PostGIS (around-me queries with a GiST index), real stores imported from OpenStreetMap, Open Prices data imported nightly. One receipt photo gives every price of the shopping trip: Tesseract OCR, a French receipt parser and a per-retailer collective memory to match each line to a product. Trust score, GPS checks, anomaly detection, Alembic migrations, tests on a real PostGIS database and GitHub Actions CI. Mobile app in React Native (Expo).">
+                                API FastAPI sur PostgreSQL/PostGIS (recherches autour de moi avec index GiST), magasins réels importés d'OpenStreetMap, prix Open Prices importés chaque nuit. Une photo de ticket de caisse donne tous les prix des courses : OCR Tesseract, analyse des tickets français et mémoire collective par enseigne pour rapprocher chaque ligne d'un produit. Score de confiance, contrôle GPS, détection d'anomalies, migrations Alembic, tests sur une vraie base PostGIS et CI GitHub Actions. App mobile en React Native (Expo).
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">FastAPI</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                                <span class="tech-tag">PostGIS</span>
+                                <span class="tech-tag">Tesseract OCR</span>
+                                <span class="tech-tag">React Native</span>
+                                <span class="tech-tag">Docker</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NeonPad -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="🎛️ NeonPad, boîte à rythmes à la manette" data-en="🎛️ NeonPad, a drum machine played with a controller">
+                            🎛️ NeonPad, boîte à rythmes à la manette
+                        </h3>
+                        <p data-fr="Une manette PS5, Xbox ou Switch devient une boîte à rythmes néon, dans le navigateur, sans rien installer."
+                           data-en="A PS5, Xbox or Switch controller becomes a neon drum machine, in the browser, with nothing to install.">
+                            Une manette PS5, Xbox ou Switch devient une boîte à rythmes néon, dans le navigateur, sans rien installer.
+                        </p>
+                        <div class="project-links">
+                            <a class="project-link" href="https://github.com/Selimcc/NeonPad" target="_blank" rel="noopener"><i class="fab fa-github"></i> <span data-fr="Code" data-en="Code">Code</span></a>
+                            <a class="project-link" href="https://selimcc.github.io/NeonPad/" target="_blank" rel="noopener"><i class="fas fa-play"></i> <span data-fr="Jouer" data-en="Play">Jouer</span></a>
+                        </div>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Sons synthétisés en temps réel avec la Web Audio API, enregistrement de boucles, grille de notes, morceaux 8-bit et effets en direct calés sur le tempo. Prise en charge des Launchpad et pads MIDI (Web MIDI, SysEx) et de la barre lumineuse de la manette (WebHID). Aucune dépendance, un seul fichier HTML qui marche hors ligne."
+                               data-en="Sounds synthesised in real time with the Web Audio API, loop recording, a note grid, 8-bit tracks and live effects locked to the tempo. Supports Launchpads and MIDI pads (Web MIDI, SysEx) and the controller's light bar (WebHID). No dependency, a single HTML file that works offline.">
+                                Sons synthétisés en temps réel avec la Web Audio API, enregistrement de boucles, grille de notes, morceaux 8-bit et effets en direct calés sur le tempo. Prise en charge des Launchpad et pads MIDI (Web MIDI, SysEx) et de la barre lumineuse de la manette (WebHID). Aucune dépendance, un seul fichier HTML qui marche hors ligne.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Web Audio API</span>
+                                <span class="tech-tag">Gamepad API</span>
+                                <span class="tech-tag">Web MIDI</span>
+                                <span class="tech-tag">Canvas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Légendage d'images -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="🖼️ Légendage automatique d'images (CESI)" data-en="🖼️ Automatic image captioning (CESI)">
+                            🖼️ Légendage automatique d'images (CESI)
+                        </h3>
+                        <p data-fr="Projet d'équipe : trier les images (photo ou non), débruiter les photos puis générer une légende pour chacune."
+                           data-en="Team project: sort images (photo or not), denoise the photos, then generate a caption for each one.">
+                            Projet d'équipe : trier les images (photo ou non), débruiter les photos puis générer une légende pour chacune.
+                        </p>
+                        <div class="project-links">
+
+                        </div>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="J'ai développé le CNN entraîné de zéro, sans modèle pré-entraîné, retenu pour le premier livrable : rappel photo de 85,9 % et F1 de 0,783 sur 6 004 images de test jamais vues, avec étude d'ablation, courbe d'apprentissage et test de McNemar. J'ai aussi mis en place la suite de tests pytest et la CI GitHub Actions de l'équipe."
+                               data-en="I built the CNN trained from scratch, with no pre-trained model, that was chosen for the first deliverable: 85.9% photo recall and 0.783 F1 on 6,004 unseen test images, with an ablation study, a learning curve and a McNemar test. I also set up the team's pytest suite and GitHub Actions CI.">
+                                J'ai développé le CNN entraîné de zéro, sans modèle pré-entraîné, retenu pour le premier livrable : rappel photo de 85,9 % et F1 de 0,783 sur 6 004 images de test jamais vues, avec étude d'ablation, courbe d'apprentissage et test de McNemar. J'ai aussi mis en place la suite de tests pytest et la CI GitHub Actions de l'équipe.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">TensorFlow</span>
+                                <span class="tech-tag">Keras</span>
+                                <span class="tech-tag">CNN</span>
+                                <span class="tech-tag">scikit-learn</span>
+                                <span class="tech-tag">pytest</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diabète -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 data-fr="🩺 Prédiction du diabète : préparation des données" data-en="🩺 Diabetes prediction: data preparation">
+                            🩺 Prédiction du diabète : préparation des données
+                        </h3>
+                        <p data-fr="Préparation des 253 680 réponses de l'enquête BRFSS 2015 du CDC pour prédire le diabète."
+                           data-en="Preparing the 253,680 answers of the CDC's BRFSS 2015 survey to predict diabetes.">
+                            Préparation des 253 680 réponses de l'enquête BRFSS 2015 du CDC pour prédire le diabète.
+                        </p>
+                        <div class="project-links">
+                            <a class="project-link" href="https://github.com/Selimcc/diabetes-prediction-deep-learning" target="_blank" rel="noopener"><i class="fab fa-github"></i> <span data-fr="Code" data-en="Code">Code</span></a>
+                        </div>
+                        <button class="btn view-more" data-fr="Voir Plus" data-en="View More">Voir Plus</button>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-details">
+                            <h4 data-fr="Description Détaillée" data-en="Detailed Description">Description Détaillée</h4>
+                            <p data-fr="Typage métier des variables, suppression de 24 206 doublons, analyse des valeurs aberrantes, analyse exploratoire, découpage stratifié 70/15/15 et normalisation ajustée sur le seul jeu d'entraînement, chaque choix justifié dans le notebook."
+                               data-en="Variable typing by meaning, removal of 24,206 duplicates, outlier analysis, exploratory analysis, stratified 70/15/15 split and scaling fitted on the training set only, each choice justified in the notebook.">
+                                Typage métier des variables, suppression de 24 206 doublons, analyse des valeurs aberrantes, analyse exploratoire, découpage stratifié 70/15/15 et normalisation ajustée sur le seul jeu d'entraînement, chaque choix justifié dans le notebook.
+                            </p>
+                            <div class="technologies-list">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">pandas</span>
+                                <span class="tech-tag">scikit-learn</span>
+                                <span class="tech-tag">seaborn</span>
+                                <span class="tech-tag">Jupyter</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Système de Reconnaissance Faciale -->
                 <div class="project-card">
                     <div class="project-header">
@@ -342,26 +517,6 @@
             </div>
         </div>
     </section>
-
-    <div class="modal" id="project-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Facial Recognition System</h2>
-            <div class="modal-body">
-                <p class="short-description">Created an interactive Power BI dashboard to visualize and analyze sales data for a retail business.</p>
-                
-                <h3>Detailed Description</h3>
-                <p class="detailed-description">
-                    This project involved the development of an advanced sales dashboard to help a retail business identify trends, monitor performance, and make data-driven decisions. Using Power BI, I cleaned and transformed raw sales data from various sources, including Excel files and SQL databases. The dashboard featured key performance indicators (KPIs), such as monthly revenue, customer segmentation, and product category performance. Advanced visualizations, like heat maps and line graphs, highlighted sales trends and helped identify underperforming areas.
-                </p>
-                
-                <div class="technologies">
-                    <h3>Key Technologies:</h3>
-                    <p>Power BI, SQL, Data Cleaning, Data Visualization</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-content">
